@@ -1,7 +1,8 @@
 # AIBot
 Quick prototype of a generalized AI bot
 
-main.py
+*main.py*
+
 The code defines a custom PyTorch model called CustomModel. This model has two parts: a feature extractor and two classifiers. The feature extractor is based on a pretrained ResNet18 model, and the classifiers are designed for predicting keyboard key presses and mouse movements.
 
 The two classifiers (for keyboard and mouse) are separate, but they both take features extracted from the image by the feature extractor as input. In the forward method, the image is passed through the feature extractor, and the resulting features are used as input for both classifiers. The classifiers then output the predicted keyboard key presses and mouse movements.
