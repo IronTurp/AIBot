@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Apr 26 14:39:33 2023
-
-@author: jfturpin
-"""
-
 
 #%% Importing modules
 import cv2
