@@ -19,6 +19,11 @@ After carefully analyzing the problem and trying multiple avenues, here is what 
 11) And now, implement game logic.
 12) Use something like YOLOv8 or YOLO-NAS for managing the shooting.
 
+1_colmap_cli_prepare.py: This code will prepare the colmap database
+2_cnn_image_matching.py: Using ResNet, we match the most similar image.
+3_feature_matching.py: With the new image and it's closest match, we match the features between them
+4_calculate_position.py: %TODO: calculate the estimate positions of the tank
+
 *main.py*
 
 The code defines a custom PyTorch model called CustomModel. This model has two parts: a feature extractor and two classifiers. The feature extractor is based on a pretrained ResNet18 model, and the classifiers are designed for predicting keyboard key presses and mouse movements.
