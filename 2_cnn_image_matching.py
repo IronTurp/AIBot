@@ -52,15 +52,28 @@ class ImageSearchEngine:
         t_img = t_img.unsqueeze(0).to(self.device)  # Put the tensor on the GPU
         features = self.model(t_img)
         return features.cpu().detach().numpy()  # Move tensor back to CPU for numpy compatibility
-
-    def search(self, new_image_path):
+    
+    def search(self, new_image_path, return_filenames=False):
         features = self.extract_features(new_image_path)
         D, I = self.index.search(features, self.n)  # Retrieve top 3 most similar images
-        return [(self.image_files[I[0][i]], D[0][i]) for i in range(self.n)]  # Return the filenames and similarities
+        results = [(self.image_files[I[0][i]], D[0][i]) for i in range(self.n)]  # Return the filenames and similarities
+        
+        if return_filenames:
+            filenames = [re.search(r'shot_\d+\.jpg', item[0]).group() for item in results]
+            return filenames
+        else:
+            return results
 
 # Use the search function
 engine = ImageSearchEngine(path_to_images)
-new_image = path_to_test_image
-results = engine.search(new_image)
+new_image = r"path_to_new_image"
+
+#If you want to see the scores printed out
+results = engine.search(new_image, False)
 for most_similar_image, similarity in results:
     print('Most similar image is ', most_similar_image, ' with similarity ', similarity)
+    
+#If you only want the filename
+filenames = engine.search(new_image, True)
+print(filenames)
+
