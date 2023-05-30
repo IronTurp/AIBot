@@ -42,6 +42,9 @@ class ImageSearchEngine:
         for image_file in self.image_files:
             features = self.extract_features(os.path.join(self.image_dir, image_file))
             self.index.add(features)
+            
+        # Number of images to extract
+        self.n = 3
 
     def extract_features(self, img_path):
         img = Image.open(img_path)
@@ -52,11 +55,12 @@ class ImageSearchEngine:
 
     def search(self, new_image_path):
         features = self.extract_features(new_image_path)
-        D, I = self.index.search(features, 1)  # Retrieve top 1 most similar image
-        return self.image_files[I[0][0]], D[0][0]  # Return the filename and similarity
+        D, I = self.index.search(features, self.n)  # Retrieve top 3 most similar images
+        return [(self.image_files[I[0][i]], D[0][i]) for i in range(self.n)]  # Return the filenames and similarities
 
 # Use the search function
 engine = ImageSearchEngine(path_to_images)
 new_image = path_to_test_image
-most_similar_image, similarity = engine.search(new_image)
-print('Most similar image is ', most_similar_image, ' with similarity ', similarity)
+results = engine.search(new_image)
+for most_similar_image, similarity in results:
+    print('Most similar image is ', most_similar_image, ' with similarity ', similarity)
